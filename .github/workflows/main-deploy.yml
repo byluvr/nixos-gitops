@@ -13,4 +13,5 @@ jobs:
       - name: Run Ansible
         run: |
           cd ansible
+          chmod 600 id_rsa
           ansible-playbook -i inventory.ini deploy.yml

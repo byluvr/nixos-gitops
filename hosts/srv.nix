@@ -43,7 +43,7 @@
     git
     htop
     nettools
-    mcedit
+    fastfetch
     micro # Команды типа netstat
   ];
 

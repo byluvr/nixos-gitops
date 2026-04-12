@@ -1,0 +1,16 @@
+- name: GitOps Deployment
+  hosts: all
+  gather_facts: no
+  vars:
+    ansible_python_interpreter: /run/current-system/sw/bin/python3
+  tasks:
+  	- name: Copy conf to remote
+  	  copy:
+  	    src: "../hosts/{{ inventory_hostname }}.nix"
+  	    dest: "/etc/nixos/configuration.nix"
+  	    owner: root
+  	    group: root
+  	    mode: '0644'
+
+  	-  name: Apply changes
+  	   shell: nixos-rebuild switch

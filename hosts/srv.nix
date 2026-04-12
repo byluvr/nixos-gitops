@@ -44,6 +44,7 @@
     htop
     nettools
     fastfetch
+    tree
     micro # Команды типа netstat
   ];
 

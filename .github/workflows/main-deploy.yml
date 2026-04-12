@@ -1,0 +1,16 @@
+name: CI/CD Infrastructure Deployment
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        user: actions/checkout@v4
+
+      - name: Run Ansible
+        run: |
+          cd ansible
+          ansible-playbook -i inventory.ini deploy.yml

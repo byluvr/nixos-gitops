@@ -43,7 +43,6 @@
     git
     htop
     nettools
-    micro # Команды типа netstat
   ];
 
   # Для демонстрации в дипломе добавим простой сервис Nginx

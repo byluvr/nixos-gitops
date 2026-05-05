@@ -11,7 +11,7 @@
 
   # Настройка сети
   networking.useDHCP = false;
-  networking.interfaces.ens33.ipv4.addresses = [{
+  networking.interfaces.ens18.ipv4.addresses = [{
     address = "192.168.10.20"; # Статический IP сервера
     prefixLength = 24;
   }];

@@ -44,6 +44,7 @@
     htop
     nettools
     tree
+    fastfetch
   ];
 
   # Для демонстрации в дипломе добавим простой сервис Nginx

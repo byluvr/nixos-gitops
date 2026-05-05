@@ -12,13 +12,13 @@
 
   # Сетевые настройки (Изолированная сеть через RTR)
   networking.useDHCP = false;
-  networking.interfaces.ens33.ipv4.addresses = [{
-    address = "192.168.20.30";
+  networking.interfaces.ens18.ipv4.addresses = [{
+    address = "192.168.10.30";
     prefixLength = 24;
   }];
 
   # Шлюзом выступает наш NixOS роутер
-  networking.defaultGateway = "192.168.20.1";
+  networking.defaultGateway = "192.168.10.1";
   networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
 
   # Локализация (чтобы в браузере и консоли был русский язык)

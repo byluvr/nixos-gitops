@@ -18,39 +18,25 @@
   # 3. Настройка интерфейсов для сегментированной топологии
   networking.interfaces = {
     # Внешний интерфейс (VMware NAT)
-    ens33.ipv4.addresses = [{
-      address = "192.168.88.131";
-      prefixLength = 24;
-    }];
+    ens18 = {
+      useDHCP = true;
+    };
     
     # Сегмент Серверов (SRV)
-    ens37.ipv4.addresses = [{
+    ens19.ipv4.addresses = [{
       address = "192.168.10.1";
-      prefixLength = 24;
-    }];
-        
-    # Сегмент Клиентов (cliPC)
-    ens38.ipv4.addresses = [{
-      address = "192.168.20.1";
-      prefixLength = 24;
-    }];
-    
-    # Сегмент Управления (AdminPC)
-    ens39.ipv4.addresses = [{
-      address = "192.168.30.1";
       prefixLength = 24;
     }];
   };
 
   # 4. Маршрутизация и DNS
-  networking.defaultGateway = "192.168.88.2";
   networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
 
   # 5. Настройка NAT (Маскарадинг) для всех внутренних сетей
   networking.nat = {
     enable = true;
-    externalInterface = "ens33";
-    internalInterfaces = [ "ens37" "ens38" "ens39" ];
+    externalInterface = "ens18";
+    internalInterfaces = [ "ens19" ];
   };
 
   # 6. Брандмауэр и безопасность
@@ -58,7 +44,7 @@
     enable = true;
     allowedTCPPorts = [ 22 ]; # Порт для управления по SSH
     # Доверяем трафику между нашими внутренними интерфейсами
-    trustedInterfaces = [ "ens37" "ens38" "ens39" ];
+    trustedInterfaces = [ "ens18" "ens19" ];
   };
 
   # 7. Локализация и пользователи

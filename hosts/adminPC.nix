@@ -18,14 +18,14 @@
 
     interfaces = {
       # ПРОВЕРЬ имя (ens33/ens32) через 'ip a' перед применением
-      ens33.ipv4.addresses = [{
-        address = "192.168.30.40";
+      ens18.ipv4.addresses = [{
+        address = "192.168.10.40";
         prefixLength = 24;
       }];
     };
 
     # Шлюз — это внутренний адрес роутера в этой подсети
-    defaultGateway = "192.168.30.1";
+    defaultGateway = "192.168.10.1";
     nameservers = [ "1.1.1.1" "8.8.8.8" ];
 
     firewall = {
@@ -67,6 +67,20 @@
     pulse.enable = true;
   };
 
+  services.github-runners.my-nixos-runner = {
+  	enable = true;
+  	url = "https://github.com/byluvr/nixos-gitops";
+  	tokenFile = "/etc/nixos/github-token";
+  	user = "admin";
+  	extraPackages = with pkgs; [
+  		ansible
+  		git
+  		python3
+  		openssh
+  		sshpass
+  	];
+  };
+  
   # 7. Пользователь
   users.users.admin = {
     isNormalUser = true;
@@ -79,6 +93,7 @@
     # Твои пакеты
     micro
     firefox
+    tree
     
     # Инструменты для диплома
     git

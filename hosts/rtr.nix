@@ -3,47 +3,46 @@
 {
   imports = [ ./hardware-configuration.nix ];
 
-  # 1. Загрузчик и системные параметры
+  # Загрузчик и системные параметры
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sda";
   boot.loader.grub.useOSProber = true;
 
-  # Включаем пересылку IP-пакетов для работы маршрутизации между подсетями
+  # Включаем пересылку IP-пакетов
   boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
 
-  # 2. Сетевая идентификация
+  # Сетевая идентификация
   networking.hostName = "RTR";
   networking.useDHCP = false;
 
-  # 3. Настройка интерфейсов для сегментированной топологии
+  # Настройка интерфейсов
   networking.interfaces = {
-    # Внешний интерфейс (VMware NAT)
+    # Внешний интерфейс (NAT)
     ens18 = {
       useDHCP = true;
     };
     
-    # Сегмент Серверов (SRV)
+    # LAN segment
     ens19.ipv4.addresses = [{
       address = "192.168.10.1";
       prefixLength = 24;
     }];
   };
 
-  # 4. Маршрутизация и DNS
+  # DNS
   networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
 
-  # 5. Настройка NAT (Маскарадинг) для всех внутренних сетей
+  # Настройка NAT (Маскарадинг) для всех внутренних сетей
   networking.nat = {
     enable = true;
     externalInterface = "ens18";
     internalInterfaces = [ "ens19" ];
   };
 
-  # 6. Брандмауэр и безопасность
+  # Брандмауэр и безопасность
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 22 ]; # Порт для управления по SSH
-    # Доверяем трафику между нашими внутренними интерфейсами
+    allowedTCPPorts = [ 22 ];
     trustedInterfaces = [ "ens18" "ens19" ];
   };
 
@@ -57,7 +56,7 @@
     extraGroups = [ "networkmanager" "wheel" ];
   };
 
-  # 8. Системные пакеты (Полный набор для администрирования)
+  # 8. Системные пакеты
   environment.systemPackages = with pkgs; [
     vim
     wget
@@ -65,13 +64,13 @@
     git
     python3
     htop
-    tcpdump   # Незаменим для диплома при анализе прохождения трафика
+    tcpdump
     tree
-    iptables  # Для просмотра правил NAT напрямую
+    iptables
     micro
   ];
 
-  # 9. Настройка OpenSSH сервера
+  # 9. Настройка OpenSSH
   services.openssh = {
     enable = true;
     settings = {

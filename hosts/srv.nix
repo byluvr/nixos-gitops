@@ -3,7 +3,7 @@
 {
   imports = [ ./hardware-configuration.nix ];
 
-  # Загрузчик (стандарт для VMware/BIOS)
+  # Загрузчик
   boot.loader.grub.enable = true;
   boot.loader.grub.device = "/dev/sda";
 
@@ -16,13 +16,13 @@
     prefixLength = 24;
   }];
 
-  # Указываем наш RTR как основной шлюз
+  # основной шлюз
   networking.defaultGateway = "192.168.10.1";
   
   # Используем внешние DNS через шлюз
   networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
 
-  # Настройка SSH для управления через Ansible и GitHub Actions
+  # Настройка SSH
   services.openssh = {
     enable = true;
     settings = {
@@ -31,7 +31,7 @@
     };
   };
 
-  # Открываем порты: 22 (SSH) и 80 (будущий веб-сервер для демо)
+  # Открываем порты:
   networking.firewall.allowedTCPPorts = [ 22 80 ];
 
   # Системный софт для сервера
@@ -42,13 +42,10 @@
     curl
     git
     htop
-    nettools
-    tree
-    fastfetch
+    nettools 
   ];
 
-  # Для демонстрации в дипломе добавим простой сервис Nginx
-  # Это покажет, что конфигурация применилась успешно
+  # Nginx
   services.nginx = {
     enable = true;
     virtualHosts."localhost" = {

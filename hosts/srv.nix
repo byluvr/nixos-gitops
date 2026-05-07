@@ -42,7 +42,8 @@
     curl
     git
     htop
-    nettools 
+    nettools
+    tree 
   ];
 
   # Nginx
